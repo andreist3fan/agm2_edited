@@ -149,7 +149,7 @@ window.onload = function () {
         if(!correctFullName){
             isFormCorrect = false
             fName.style.color="red";
-            fName.innerHTML="Your name should contain characters only and be of length 3.";
+            fName.innerHTML="Your name should contain characters only and not be blank.";
         }
         else{
             fName.style.color="green";
@@ -250,13 +250,51 @@ window.onload = function () {
         var passwordConfirm = inputs[7].value;
         if(passwordConfirm != password){
             isFormCorrect = false;
-            pass.style.color = "red";
+            passConfirm.style.color = "red";
             passConfirm.innerHTML = "These password does not coincide with the one previously entered";
-        }else{
+        }else
+        if(passwordConfirm.length<=0){
+            isFormCorrect = false;
+            passConfirm.style.color = "red";
+            passConfirm.innerHTML = 'The "Confirm Password" field should not be blank.';
+        }
+        else
+        {
+            
+
             passConfirm.style.color = "green";
             passConfirm.innerHTML = "Correct!";
         }
+        /**
+     * Mandatory Other Fields Check
+     * (Country, E-mail)
+     */
+    var emailDiv = document.getElementById("email");
+    var enteredEmail= inputs[5].value;
+    if(enteredEmail.length<=0){
+        isFormCorrect = false;
+            emailDiv.style.color = "red";
+            emailDiv.innerHTML = 'The "Email" field is mandatory.';
+    }
+    else{
+        emailDiv.style.color = "green";
+        emailDiv.innerHTML = 'Correct!';
+    }
+
+    var countryDiv = document.getElementById("country");
+    var enteredCountry= inputs[3].value;
+    if(enteredCountry.length<=0){
+        isFormCorrect = false;
+            countryDiv.style.color = "red";
+            countryDiv.innerHTML = 'The "Country" field is mandatory.';
+    }
+    else{
+        countryDiv.style.color = "green";
+        countryDiv.innerHTML = 'Correct!';
+    }
     });
+
+    
 
       
 
