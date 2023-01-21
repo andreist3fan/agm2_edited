@@ -3,6 +3,11 @@ var timeSpent = 0; //the time spent on the signup page
 var keyPresses = 0; //the number of keys pressed
 var charsTyped = 0; // the total number of characters typed
 var isSubmitPressed = false; // boolean that keeps track if the submit button was pressed
+
+var isFormCorrect = false; // boolean that keeps track if
+                           // all the information in the form
+                           // was introduced corectly
+
 /**
  * Once the window has loaded, we run this code:
  */
@@ -42,13 +47,16 @@ window.onload = function () {
      * 2. shows the div containing all the tracking info.
      */
     subBut.addEventListener("click", function () {
-        results.style.visibility = "visible";
         charsTyped=0;
         for(let i=0; i<inputs.length-1;i++){
             charsTyped+=inputs[i].value.length;
         }
         chars.innerHTML = charsTyped;
-        isSubmitPressed = true;
+        
+        if(isFormCorrect){
+            results.style.visibility = "visible";
+            isSubmitPressed = true;
+        }
     });
     /**
      * Checks how many mouse clicks have occurred on the input form.
@@ -91,53 +99,52 @@ window.onload = function () {
     });
 
 
-
-
     /**
      * INPUT CHECKING BEGINS HERE
      */
-    var uID= document.getElementById("user-id");
-    var fName= document.getElementById("full-name");
-
-
     document.addEventListener("focusout", function (){
+        isFormCorrect = true; // we consider the form to be
+                              // completed corectly
+                              // until proven otherwise
         /**
          * UserID Check
          */
-        let input1 = inputs[0].value;
-        let firstChar = input1[0];
-        let lastChar = input1[input1.length-1];
-        let len = input1.length;
+        var uID = document.getElementById("user-id");
+        let userID = inputs[0].value;
+        let firstChar = userID[0];
+        let lastChar = userID[userID.length-1];
+        let len = userID.length;
 
-        if(firstChar>='A' && firstChar<='Z' && 
-        lastChar>='!' && lastChar<='/' &&
-        len>=5 && len<=12){
-            uID.style.color="green";
-            uID.innerHTML="Correct!";
+        if(firstChar >= 'A' && firstChar <= 'Z' && 
+            lastChar >= '!' && lastChar <= '/' &&
+        len >= 5 && len <= 12){
+            uID.style.color = "green";
+            uID.innerHTML = "Correct!";
         }
         else {
-            uID.style.color="red";
-            if(!(firstChar>='A' && firstChar<='Z')){
-            uID.innerHTML="Your user ID should start with a capital letter.";
+            isFormCorrect = false; // if the field is wrong
+                                   // the form is not correct
+            uID.style.color = "red";
+            if(!(firstChar >= 'A' && firstChar <= 'Z')){
+                uID.innerHTML = "Your user ID should start with a capital letter.";
             }
-            else if(!(lastChar>='!' && lastChar<='/'))
-            uID.innerHTML="Your user ID should end with a special character (!,./#&).";
-            else
-            uID.innerHTML="Your user ID should have 5-12 characters.";
+            else if(!(lastChar >= '!' && lastChar <= '/'))
+                    uID.innerHTML = "Your user ID should end with a special character (!,./#&).";
+                else
+                    uID.innerHTML = "Your user ID should have 5-12 characters.";
         }
 
         /**
          * Full Name Check
          */
-        let input2 = inputs[1].value;
-        let correctFullName=true;
-        for(let i=0; i < input2.length; i++)
-            if(!(isAlpha(input2[i]) || input2[i]==' ')){
-                console.log(input2[i]);
+        var fName = document.getElementById("full-name");
+        let fullName = inputs[1].value;
+        let correctFullName = true;
+        for(let i = 0; i < fullName.length; i++)
+            if(!(isAlpha(fullName[i]) || fullName[i] == ' ')){
                 correctFullName = false;
-                break;
             }
-        if(input2.length < 3)
+        if(fullName.length < 3)
             correctFullName = false;
         if(!correctFullName){
             fName.style.color="red";
@@ -147,6 +154,11 @@ window.onload = function () {
             fName.style.color="green";
             fName.innerHTML="Correct!";
         }
+
+        /**
+         * Zip Code Check
+         */
+        let zCode = document.getElementById("")
     });
 
       
