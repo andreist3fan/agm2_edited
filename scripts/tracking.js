@@ -147,6 +147,7 @@ window.onload = function () {
         if(fullName.length < 3)
             correctFullName = false;
         if(!correctFullName){
+            isFormCorrect = false
             fName.style.color="red";
             fName.innerHTML="Your name should contain characters only and be of length 3.";
         }
@@ -158,7 +159,103 @@ window.onload = function () {
         /**
          * Zip Code Check
          */
-        let zCode = document.getElementById("")
+        var zCode = document.getElementById("zip-code");
+        var zipCode = inputs[4].value;
+        var zipNumbers = zipCode.substring(0,4);
+        var zipLetters = zipCode.substring(4, 6);
+        var correctZipCode = true;
+        for(let i = 0; i < zipNumbers.length; i++){
+            if(!isNumber(zipNumbers[i])){
+                correctZipCode = false;
+            }
+        }
+        for(let i = 0; i < zipLetters.length; i++){
+            if(!isAlpha(zipLetters[i]) || zipLetters[i] == ' '){
+                correctZipCode = false;
+            }
+        }
+
+
+        if(zipNumbers.length != 4 || zipLetters.length != 2 
+            || zipCode.length != 6)
+            correctZipCode = false;
+
+        if(!correctZipCode){
+            isFormCorrect = false;
+            zCode.style.color = "red";
+            zCode.innerHTML = "The entered Zip Code is not a correct Dutch Zip Code";
+        }else{
+            zCode.style.color="green";
+            zCode.innerHTML="Correct!";
+        }
+
+        /**
+         * Password Validator
+         */
+        var pass = document.getElementById("password");
+        var password = inputs[6].value;
+        if(password.length < 12){
+            isFormCorrect = false;
+            pass.style.color = "red";
+            pass.innerHTML = "The entered password is not longer than 12 characters";
+        }else{
+            if(password.length < 14){
+                pass.style.color = "orange";
+                pass.innerHTML = "Password strength is good";
+            }
+            var hasUppercaseLetter = false;
+            var hasLowercaseLetter = false;
+            for(let i = 0; i < password.length; i++){
+                if(password[i] >= "A" && password <= "Z"){
+                    hasUppercaseLetter = true;
+                }
+                if(password[i] >= "a" && password <= "z"){
+                    hasLowercaseLetter = true;
+                }
+            }
+            if(!hasUppercaseLetter || !hasLowercaseLetter){
+                isFormCorrect = false;
+                pass.style.color = "red";
+                pass.innerHTML = "The password must be a combination of upper and lower case letters";
+            }else{
+                var hasNumbers = false;
+                var hasSymbols = false;
+                for(let i = 0; i < password.length; i++){
+                    if(isNumber(password[i])){
+                        hasNumbers = true;
+                    }
+                    else{
+                        if(!isAlpha(password[i])){
+                            hasSymbols = true;
+                        }
+                    }
+                }   
+                if(!hasNumbers || !hasSymbols){
+                    isFormCorrect = false;
+                    pass.style.color = "red";
+                    pass.innerHTML = "The password must contain at least one number and one symbol";
+                }
+                else{
+                    pass.style.color = "green";
+                    pass.innerHTML = "Password strength is good";
+                }
+            }
+            
+        }
+
+        /**
+         * Password Confirmation Check
+         */
+        var passConfirm = document.getElementById("pass-confirm");
+        var passwordConfirm = inputs[7].value;
+        if(passwordConfirm != password){
+            isFormCorrect = false;
+            pass.style.color = "red";
+            passConfirm.innerHTML = "These password does not coincide with the one previously entered";
+        }else{
+            passConfirm.style.color = "green";
+            passConfirm.innerHTML = "Correct!";
+        }
     });
 
       
@@ -169,3 +266,7 @@ var isAlpha = function(ch){
     return typeof ch === "string" && ch.length === 1
            && (ch >= "a" && ch <= "z" || ch >= "A" && ch <= "Z");
   }
+
+var isNumber = function(crtChar){
+    return crtChar >= "0" && crtChar <= "9" && crtChar.length === 1;
+}
