@@ -217,7 +217,7 @@ window.onload = function () {
          * Password Validator
          */
         var pass = document.getElementById("password");
-        var password = inputs[6].value;
+        var password = inputs[6].value.trim;
         // We check whether the password has at least 12 characters.
         if (password.length < 12) {
             // If not, we display the appropriate message.
@@ -282,7 +282,7 @@ window.onload = function () {
          * Password Confirmation Check
          */
         var passConfirm = document.getElementById("pass-confirm");
-        var passwordConfirm = inputs[7].value;
+        var passwordConfirm = inputs[7].value.trim;
         
         // We first check whether both passwords are equal
 
@@ -309,7 +309,7 @@ window.onload = function () {
          * (Country, E-mail)
          */
         var emailDiv = document.getElementById("email");
-        var enteredEmail = inputs[5].value;
+        var enteredEmail = inputs[5].value.trim;
         if (enteredEmail.length <= 0) {
             isFormCorrect = false;
             emailDiv.style.color = "red";
@@ -321,7 +321,7 @@ window.onload = function () {
         }
 
         var countryDiv = document.getElementById("country");
-        var enteredCountry = inputs[3].value;
+        var enteredCountry = inputs[3].value.trim;
         if (enteredCountry.length <= 0) {
             isFormCorrect = false;
             countryDiv.style.color = "red";
@@ -332,10 +332,6 @@ window.onload = function () {
             countryDiv.innerHTML = 'Correct!';
         }
     });
-
-
-
-
 
 }
 
